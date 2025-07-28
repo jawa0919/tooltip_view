@@ -43,6 +43,8 @@ class _MyHomePageState extends State<MyHomePage> {
   TooltipAlignment alignment = TooltipAlignment.top;
   double dx = 40.0;
   double dy = 0.0;
+  double borderRadius = 10.0;
+  double triangleSize = 20.0;
 
   @override
   Widget build(BuildContext context) {
@@ -53,85 +55,133 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: Column(
         children: <Widget>[
-          RadioListTile<TooltipAlignment>(
-            title: const Text('top'),
-            value: TooltipAlignment.top,
-            groupValue: alignment,
-            onChanged: (TooltipAlignment? value) {
-              setState(() {
-                alignment = value!;
-              });
-            },
+          ListTile(
+            leading: Text("Alignment"),
+            title: Row(
+              children: [
+                const Text('top'),
+                Radio(
+                  value: TooltipAlignment.top,
+                  groupValue: alignment,
+                  onChanged: (TooltipAlignment? value) {
+                    setState(() {
+                      alignment = value!;
+                    });
+                  },
+                ),
+                const Text('left'),
+                Radio(
+                  value: TooltipAlignment.left,
+                  groupValue: alignment,
+                  onChanged: (TooltipAlignment? value) {
+                    setState(() {
+                      alignment = value!;
+                    });
+                  },
+                ),
+                const Text('bottom'),
+                Radio(
+                  value: TooltipAlignment.bottom,
+                  groupValue: alignment,
+                  onChanged: (TooltipAlignment? value) {
+                    setState(() {
+                      alignment = value!;
+                    });
+                  },
+                ),
+                const Text('right'),
+                Radio(
+                  value: TooltipAlignment.right,
+                  groupValue: alignment,
+                  onChanged: (TooltipAlignment? value) {
+                    setState(() {
+                      alignment = value!;
+                    });
+                  },
+                ),
+              ],
+            ),
           ),
-          RadioListTile<TooltipAlignment>(
-            title: const Text('left'),
-            value: TooltipAlignment.left,
-            groupValue: alignment,
-            onChanged: (TooltipAlignment? value) {
-              setState(() {
-                alignment = value!;
-              });
-            },
+          ListTile(
+            leading: Text("dx"),
+            title: Slider(
+              value: dx,
+              min: -50,
+              max: 50,
+              divisions: 100,
+              label: "dx $dx",
+              activeColor: Colors.blue,
+              inactiveColor: Colors.grey,
+              onChanged: (value) {
+                setState(() {
+                  dx = value;
+                });
+              },
+            ),
           ),
-          RadioListTile<TooltipAlignment>(
-            title: const Text('bottom'),
-            value: TooltipAlignment.bottom,
-            groupValue: alignment,
-            onChanged: (TooltipAlignment? value) {
-              setState(() {
-                alignment = value!;
-              });
-            },
+          ListTile(
+            leading: Text("dy"),
+            title: Slider(
+              value: dy,
+              min: -50,
+              max: 50,
+              divisions: 100,
+              label: "dy $dy",
+              activeColor: Colors.blue,
+              inactiveColor: Colors.grey,
+              onChanged: (value) {
+                setState(() {
+                  dy = value;
+                });
+              },
+            ),
           ),
-          RadioListTile<TooltipAlignment>(
-            title: const Text('right'),
-            value: TooltipAlignment.right,
-            groupValue: alignment,
-            onChanged: (TooltipAlignment? value) {
-              setState(() {
-                alignment = value!;
-              });
-            },
+          ListTile(
+            leading: Text("borderRadius"),
+            title: Slider(
+              value: borderRadius,
+              min: 5,
+              max: 50,
+              divisions: 45,
+              label: "borderRadius $borderRadius",
+              activeColor: Colors.blue,
+              inactiveColor: Colors.grey,
+              onChanged: (value) {
+                setState(() {
+                  borderRadius = value;
+                });
+              },
+            ),
           ),
-          Slider(
-            value: dx,
-            min: -50,
-            max: 50,
-            divisions: 10,
-            label: "dx $dx",
-            activeColor: Colors.blue,
-            inactiveColor: Colors.grey,
-            onChanged: (value) {
-              setState(() {
-                dx = value;
-              });
-            },
+          ListTile(
+            leading: Text("triangleSize"),
+            title: Slider(
+              value: triangleSize,
+              min: 5,
+              max: 50,
+              divisions: 45,
+              label: "triangleSize $triangleSize",
+              activeColor: Colors.blue,
+              inactiveColor: Colors.grey,
+              onChanged: (value) {
+                setState(() {
+                  triangleSize = value;
+                });
+              },
+            ),
           ),
-          SizedBox(height: 50),
-          Slider(
-            value: dy,
-            min: -50,
-            max: 50,
-            divisions: 10,
-            label: "dy $dy",
-            activeColor: Colors.blue,
-            inactiveColor: Colors.grey,
-            onChanged: (value) {
-              setState(() {
-                dy = value;
-              });
-            },
-          ),
+          SizedBox(height: 150),
           const Text('You have pushed the button this many times:'),
           Text(
             '$_counter',
             style: Theme.of(context).textTheme.headlineMedium,
           ),
-          SizedBox(height: 50),
           TooltipView(
             controller: _ct,
             alignment: alignment,
             offset: Offset(dx, dy),
+            borderRadius: borderRadius,
+            triangleSize: triangleSize,
             tooltipBuilder: (BuildContext context, TooltipController c) {
               return Row(
                 mainAxisSize: MainAxisSize.min,
@@ -171,11 +221,7 @@ class _MyHomePageState extends State<MyHomePage> {
           _ct.show = true;
         },
         tooltip: 'Show',
-        child: Row(
-          children: [
-            Text("Show"),
-          ],
-        ),
+        child: Text("Show"),
       ),
     );
   }
