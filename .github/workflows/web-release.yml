@@ -34,7 +34,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: web-release
-          path: ./build/web
+          path: ./example/build/web
 
   deploy:
     name: Deploy Web Build
