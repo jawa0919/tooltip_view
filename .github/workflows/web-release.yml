@@ -1,0 +1,56 @@
+# 自动构建发布web
+name: Auto Build And Release Web
+
+# 当一个版本标签推送到仓库时触发工作流
+on:
+  push:
+    tags:
+      - v*
+
+# 工作流程需要执行的任务
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    # 步骤
+    steps:
+      # 拉取代码
+      - name: Checkout
+        uses: actions/checkout@v2.7.0
+      # 安装Flutter
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2.10.0
+        with:
+          channel: "stable"
+          flutter-version: "3.27.4"
+      # 进入样例
+      - name: cd example
+        run: cd ./example        
+      # 下载项目依赖
+      - name: Get dependencies
+        run: flutter pub get
+      # 开始打包Web发布版
+      - name: Start Web Release Build
+        run: flutter build web --release --base-href=/${GITHUB_REPOSITORY#*/}/
+      # 发布到 GitHub Release
+      - name: Upload Web Build Files
+        uses: actions/upload-artifact@v2
+        with:
+          name: web-release
+          path: ./build/web
+
+  deploy:
+    name: Deploy Web Build
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download Web Release
+        uses: actions/download-artifact@v2
+        with:
+          name: web-release
+
+      - name: Deploy to gh-pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./
