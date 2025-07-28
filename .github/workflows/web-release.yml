@@ -24,7 +24,7 @@ jobs:
           flutter-version: "3.27.4"
       # 进入样例
       - name: cd example
-        run: cd ./example        
+        run: cd ./example/        
       # 下载项目依赖
       - name: Get dependencies
         run: flutter pub get
