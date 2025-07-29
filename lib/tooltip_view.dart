@@ -54,21 +54,20 @@ class TooltipAlignment {
 }
 
 class TooltipController {
-  TooltipController({bool? show}) : _show = show ?? true;
-
   bool _show;
-  final List<void Function(bool)> _listeners = [];
+  TooltipController({bool? show}) : _show = show ?? false;
 
   bool get show => _show;
-  set show(bool nv) {
-    if (_show != nv) {
-      _show = nv;
+  set show(bool newVal) {
+    if (_show != newVal) {
+      _show = newVal;
       for (var listener in _listeners) {
         listener(_show);
       }
     }
   }
 
+  final List<void Function(bool)> _listeners = [];
   void addListener(TooltipListener listener) {
     _listeners.add(listener);
   }
@@ -102,7 +101,7 @@ class TooltipView extends StatefulWidget {
     this.onChange,
     this.alignment = TooltipAlignment.top,
     this.color = const Color(0xFFFFFFFF),
-    this.overlayColor = const Color(0x799E9E9E),
+    this.overlayColor = const Color(0x88000000),
     this.borderRadius = 10,
     this.triangleSize = 20,
     this.offset = Offset.zero,

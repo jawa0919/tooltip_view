@@ -59,7 +59,6 @@ class _MyHomePageState extends State<MyHomePage> {
             leading: Text("Alignment"),
             title: Row(
               children: [
-                const Text('top'),
                 Radio(
                   value: TooltipAlignment.top,
                   groupValue: alignment,
@@ -69,7 +68,10 @@ class _MyHomePageState extends State<MyHomePage> {
                     });
                   },
                 ),
-                const Text('left'),
+                Padding(
+                  padding: const EdgeInsets.only(right: 16),
+                  child: const Text('top'),
+                ),
                 Radio(
                   value: TooltipAlignment.left,
                   groupValue: alignment,
@@ -79,7 +81,10 @@ class _MyHomePageState extends State<MyHomePage> {
                     });
                   },
                 ),
-                const Text('bottom'),
+                Padding(
+                  padding: const EdgeInsets.only(right: 16),
+                  child: const Text('left'),
+                ),
                 Radio(
                   value: TooltipAlignment.bottom,
                   groupValue: alignment,
@@ -89,7 +94,10 @@ class _MyHomePageState extends State<MyHomePage> {
                     });
                   },
                 ),
-                const Text('right'),
+                Padding(
+                  padding: const EdgeInsets.only(right: 16),
+                  child: const Text('bottom'),
+                ),
                 Radio(
                   value: TooltipAlignment.right,
                   groupValue: alignment,
@@ -98,6 +106,10 @@ class _MyHomePageState extends State<MyHomePage> {
                       alignment = value!;
                     });
                   },
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(right: 16),
+                  child: const Text('right'),
                 ),
               ],
             ),
